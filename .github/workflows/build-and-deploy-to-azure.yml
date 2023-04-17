@@ -26,7 +26,7 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az storage blob upload-batch --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" --account-name $AZURE_STORAGE_ACCOUNT_NAME --destination $AZURE_STORAGE_CONTAINER_NAME --source ./dist --pattern "*"
+            az storage blob upload-batch --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" --account-name ${{ vars.AZURE_STORAGE_ACCOUNT_NAME }} --destination ${{ vars.AZURE_STORAGE_CONTAINER_NAME }} --source ./dist --pattern "*"
             #    - name: Purge CDN endpoint
             #      uses: azure/CLI@v1
             #      with:
