@@ -7,8 +7,6 @@ on:
 
 env:
   IMAGE_TAG: latest
-  AZURE_STORAGE_ACCOUNT_NAME: $AZURE_STORAGE_ACCOUNT_NAME
-  AZURE_STORAGE_CONTAINER_NAME: $AZURE_STORAGE_CONTAINER_NAME
   AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
 
 jobs:
@@ -28,7 +26,7 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az storage blob upload-batch --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" --account-name ${{ env.AZURE_STORAGE_ACCOUNT_NAME }} --destination ${{ env.AZURE_STORAGE_CONTAINER_NAME }} --source ./dist --pattern "*"
+            az storage blob upload-batch --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" --account-name $AZURE_STORAGE_ACCOUNT_NAME --destination $AZURE_STORAGE_CONTAINER_NAME --source ./dist --pattern "*"
             #    - name: Purge CDN endpoint
             #      uses: azure/CLI@v1
             #      with:
