@@ -13,7 +13,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: ${{ env.ENVIRONMENT }}
+    environment: "${{ env.ENVIRONMENT }}"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
