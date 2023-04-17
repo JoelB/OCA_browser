@@ -8,12 +8,11 @@ on:
 env:
   IMAGE_TAG: latest
   AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-  ENVIRONMENT: ${{ github.ref == 'refs/heads/main' && 'Production' || startsWith(github.ref, 'refs/heads/dev') && 'Development' || '' }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: "${{ env.ENVIRONMENT }}"
+    environment: Production
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
