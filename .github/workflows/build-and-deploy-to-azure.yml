@@ -18,22 +18,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
       - name: Build Docker image
         run: docker build -t oca-browser:$IMAGE_TAG .
       
       - name: Copy assets from builder
         run: docker create --name oca-browser-container oca-browser:$IMAGE_TAG && docker cp oca-browser-container:/app/dist ./ && docker rm oca-browser-container
-      
-      - name: Upload to Azure Blob Storage
-        uses: Azure/blob-storage-upload@v1
-        with:
-          connection_string: ${{ env.AZURE_STORAGE_CONNECTION_STRING }}
-          container_name: ${{ env.AZURE_STORAGE_CONTAINER_NAME }}
-          source: ./dist
 
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az storage blob upload-batch --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" --account-name ${{ env.AZURE_STORAGE_ACCOUNT_NAME }} --destination ${{ env.AZURE_STORAGE_CONTAINER_NAME }} --source ./dist --pattern "*"
+          #    - name: Purge CDN endpoint
+          #      uses: azure/CLI@v1
+          #      with:
+          #        inlineScript: |
+          #           az cdn endpoint purge --content-paths  "/*" --profile-name "CDN_PROFILE_NAME" --name "CDN_ENDPOINT" --resource-group "RESOURCE_GROUP"
