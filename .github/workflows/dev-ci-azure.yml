@@ -35,4 +35,4 @@ jobs:
 
       - name: Upload to blob storage
         run: |
-            az storage blob upload-batch --auth-mode login --account-name ${{ vars.AZURE_STORAGE_ACCOUNT_NAME }} --destination ${{ vars.AZURE_STORAGE_CONTAINER_NAME }} --source ./dist --pattern "*"
+            az storage blob upload-batch --auth-mode login --account-name ${{ vars.AZURE_STORAGE_ACCOUNT_NAME }} --destination ${{ vars.AZURE_STORAGE_CONTAINER_NAME }} --source ./dist --pattern "*" --overwrite
