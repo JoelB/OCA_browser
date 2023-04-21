@@ -11,3 +11,4 @@ FROM alpine as production
 RUN apk add --update libintl && apk add --virtual build_deps gettext
 WORKDIR /app
 COPY --from=builder /app/dist/spa ./dist
+#testing
